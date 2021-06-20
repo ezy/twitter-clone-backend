@@ -28,36 +28,6 @@ Check out the [deployed site](https://twitterclone22.netlify.app)
 
 ## Running locally
 
-### Prisma setup
-
-- You need to have a prisma account
-- Make sure to install the prisma cli tool globally in your machine
-
-	```bash
-	npm i -g prisma
-
-	# once you created your account, you can login from the terminal
-	prisma login
-	```
-
-- Once you logged into your account, you need to create a new prisma project
-
-	```bash
-	prisma init 
-	```
-
-- Copy the 'datamodel.prisma' file in the 'prisma_setup' folder to the root directory
-
-	```bash
-	cp prisma_setup/datamodel.prisma . # assuming you are present in the root directory
-	```
-
-- Then you need to simply deploy the changes you made
-
-	```bash
-	prisma deploy
-	```
-
 ### Environmental variables setup
 
 - Create a .env file at the root directory with the following contents
@@ -65,14 +35,32 @@ Check out the [deployed site](https://twitterclone22.netlify.app)
 ```javascript
 JWT_SECRET=<YOUR_SECRET>
 PORT=<PORT>
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/dev?schema=public"
 ```
 
 Then run <code>npm i && npm run dev</code> to start the development server
 
-## Watch this video on how to setup locally
+### Prisma setup
 
-[![New Tweet](screenshots/new_tweet.png)](http://www.youtube.com/watch?v=d0bUTj56bDU "Twitter Clone Setup")
+- Make sure to install the prisma cli tool globally in your machine
 
+	```bash
+	npm i -g prisma
+	```
+
+- Install docker and run docker-compose from the project folder
+
+	```bash
+	docker-compose up
+	```
+
+- Populate your db with the prisma migration tool
+
+	```bash
+	npm run prisma:dev
+	```
+
+Once you've done this you should be able to see the tables in `public` in your postgres db.
 
 ## Deploying the backend to heroku
 
