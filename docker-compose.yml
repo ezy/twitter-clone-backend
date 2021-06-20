@@ -1,0 +1,20 @@
+version: '3.1'
+
+networks:
+  mojo:
+
+services:
+
+  postgres:
+    image: postgres:12.4
+    ports:
+      - 5432:5432
+    volumes:
+      - .pgdata/db:/var/lib/postgresql
+      - .pgdata/db/init:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mojo_dev
+    restart: unless-stopped
+    networks:
+      - mojo

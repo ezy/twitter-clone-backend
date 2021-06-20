@@ -1,0 +1,98 @@
+datasource pg {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+generator photon {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         String    @id @default(cuid())
+  firstname  String
+  lastname   String
+  email      String    @unique
+  handle     String    @unique
+  password   String?
+  coverPhoto String?   @default("https://res.cloudinary.com/tylerdurden/image/upload/v1617334073/random/Rectangle_2_mbyujf.png")
+  avatar     String?   @default("https://res.cloudinary.com/tylerdurden/image/upload/v1602657481/random/pngfind.com-default-image-png-6764065_krremh.png")
+  bio        String?   @default("")
+  location   String?   @default("")
+  website    String?   @default("")
+  dob        String?   @default("")
+  tweets     Tweet[]   @relation(name: "TweetsByUser")
+  retweets   Retweet[] @relation(name: "RetweetsByUser")
+  following  User[]    @relation(name: "FollowRelation")
+  followers  User[]    @relation(name: "FollowRelation")
+  comments   Comment[] @relation(name: "CommentsByUser")
+  likes      Like[]    @relation(name: "LikesByUser")
+  files      File[]    @relation(name: "FilesByUser")
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Tweet {
+  id        String    @id @default(cuid())
+  user      User?     @relation(name: "TweetsByUser", fields: [userId], references: [id])
+  text      String
+  tags      String[]
+  files     File[]    @relation(name: "FilesForTweets")
+  comments  Comment[] @relation(name: "CommentsForTweets")
+  likes     Like[]    @relation(name: "LikesForTweets")
+  retweets  Retweet[] @relation(name: "RetweetsOfTweet")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Tag       Tag?      @relation(fields: [tagId], references: [id])
+  tagId     String?
+  userId    String?
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  text      String
+  tweet     Tweet?   @relation(name: "CommentsForTweets", fields: [tweetId], references: [id])
+  user      User?    @relation(name: "CommentsByUser", fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tweetId   String?
+  userId    String?
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  tweet     Tweet?   @relation(name: "LikesForTweets", fields: [tweetId], references: [id])
+  user      User?    @relation(name: "LikesByUser", fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tweetId   String?
+  userId    String?
+}
+
+model File {
+  id        String   @id @default(cuid())
+  url       String
+  tweet     Tweet?   @relation(name: "FilesForTweets", fields: [tweetId], references: [id])
+  user      User?    @relation(name: "FilesByUser", fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tweetId   String?
+  userId    String?
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  text      String
+  tweets    Tweet[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Retweet {
+  id        String   @id @default(cuid())
+  tweet     Tweet?   @relation(name: "RetweetsOfTweet", fields: [tweetId], references: [id])
+  user      User?    @relation(name: "RetweetsByUser", fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tweetId   String?
+  userId    String?
+}
