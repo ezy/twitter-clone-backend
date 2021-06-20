@@ -4,7 +4,7 @@ const { GraphQLServer } = require("graphql-yoga");
 const { PrismaClient } = require('@prisma/client');
 const { getUserId } = require("./utils");
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 const server = new GraphQLServer({
   schema,

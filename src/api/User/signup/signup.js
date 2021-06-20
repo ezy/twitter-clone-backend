@@ -5,8 +5,10 @@ module.exports = {
   Mutation: {
     signup: async (parent, args, ctx) => {
       // check if the email and username is unique
-      const exists = await ctx.prisma.$exists.user({
-        OR: [{ email: args.email }, { handle: args.handle }],
+      const exists = await ctx.prisma.user.findFirst({
+        where: {
+          OR: [{ email: { equals: args.email } }, { handle: { equals: args.handle } }],
+        },
       });
 
       if (exists)
@@ -16,10 +18,14 @@ module.exports = {
       const hashedPw = await bcrypt.hash(args.password, 10);
 
       // generate a jsonwebtoken using the userid as payload
-      const { password, ...user } = await ctx.prisma.createUser({
-        ...args,
-        password: hashedPw,
+      const user = await ctx.prisma.user.create({
+        data: {
+          ...args,
+          password: hashedPw,
+        },
       });
+
+      console.log('**********', user);
 
       // generate jsonwebtoken using userid as payload
       const payload = { userId: user.id };
