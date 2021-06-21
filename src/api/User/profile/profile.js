@@ -7,7 +7,7 @@ module.exports = {
         where: { handle: args.handle },
         include: { 
           tweets: true,
-          // retweets: true,
+          retweets: true,
           following: true,
           followers: true,
           // comments: true,

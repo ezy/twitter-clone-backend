@@ -47,14 +47,14 @@ module.exports = {
       const userId = ctx.getUserId(ctx);
       if (!userId) throw Error("You need to be authenticated");
 
-      const retweets = await ctx.prisma.retweet.findMany({
+      const retweet = await ctx.prisma.retweet.findFirst({
         where: {
           user: { id: userId },
           tweet: { id: parent.id },
         },
       });
 
-      return retweets.length ? true : false;
+      return retweet ? true : false;
     },
   },
 };
