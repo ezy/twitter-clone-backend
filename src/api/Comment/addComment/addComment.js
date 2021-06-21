@@ -23,7 +23,7 @@ module.exports = {
           user: {
             connect: { id: userId },
           },
-        },
+        }
       });
       // .$fragment(COMMENT_FRAGMENT);
 

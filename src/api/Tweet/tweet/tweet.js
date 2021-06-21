@@ -8,7 +8,9 @@ module.exports = {
         include: {
           user: true,
           files: true,
-          comments: true,
+          comments: {
+            include: { user: true },
+          },
         },
       });
       // .$fragment(MASTER_TWEET_FRAGMENT);
