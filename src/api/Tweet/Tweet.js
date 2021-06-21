@@ -31,11 +31,11 @@ module.exports = {
 
       return like ? true : false;
     },
-    isTweetMine: (parent, args, ctx) => {
+    isTweetMine: async (parent, args, ctx) => {
       const userId = ctx.getUserId(ctx);
       if (!userId) throw Error("You need to be authenticated");
 
-      const mine =  ctx.prisma.tweet.findFirst({
+      const mine =  await ctx.prisma.tweet.findFirst({
         where: {
           AND: [{ id: parent.id }, { user: { id: userId } }],
         },

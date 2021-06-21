@@ -27,6 +27,7 @@ module.exports = {
         include: {
           user: true,
           files: true,
+          retweets: true,
         },
       });
 
