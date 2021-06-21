@@ -8,21 +8,25 @@ module.exports = {
       // 2. create a new tweet
       const { text, files, tags = [] } = args;
 
-      const tweet = await ctx.prisma.createTweet({
-        text,
-        tags: {
-          set: tags,
-        },
-        user: { connect: { id: userId } },
+      const tweet = await ctx.prisma.tweet.create({
+        data: {
+          text,
+          tags: {
+            set: tags,
+          },
+          user: { connect: { id: userId } },
+        }
       });
 
       // 3. if there is any file, create it
       if (files && files.length) {
         files.forEach(async (file) => {
-          await ctx.prisma.createFile({
-            url: file,
-            tweet: { connect: { id: tweet.id } },
-            user: { connect: { id: userId } },
+          await ctx.prisma.file.create({
+            data: {
+              url: file,
+              tweet: { connect: { id: tweet.id } },
+              user: { connect: { id: userId } },
+            }
           });
         });
       }
@@ -31,32 +35,27 @@ module.exports = {
       if (tweet.tags && tweet.tags.length) {
         tweet.tags.forEach(async (tag) => {
           // if the tag already exits update the tag
-          const [res] = await ctx.prisma.tags({
+          const [res] = await ctx.prisma.tag.findMany({
             where: {
               text: tag,
             },
           });
 
-          if (res) {
-            await ctx.prisma.updateTag({
-              where: {
-                id: res.id,
-              },
-              data: {
-                tweets: {
-                  connect: { id: tweet.id },
-                },
-              },
-            });
-          } else {
-            // otherwise create a new tag
-            await ctx.prisma.createTag({
-              text: tag,
-              tweets: {
+          await ctx.prisma.tag.upsert({
+            where: {
+              id: res.id,
+            },
+            update: {
+              tweet: {
                 connect: { id: tweet.id },
               },
-            });
-          }
+            },
+            create: {
+              tweet: {
+                connect: { id: tweet.id },
+              },
+            },
+          });
         });
       }
 
