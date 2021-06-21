@@ -90,22 +90,42 @@ exports.TWEET_FRAGMENT = `
 `;
 
 exports.TWEET_SELECT = {
-	id: true,
-	text: true,
-	tags: true,
-	files: {
-		id: true,
-		url: true,
-	},
-	user: {
-		id: true,
-		avatar: true,
-		firstname: true,
-		lastname: true,
-		handle: true,
-	},
-	createdAt: true,
-}
+  id: true,
+  text: true,
+  tags: true,
+  files: {
+    id: true,
+    url: true,
+  },
+  user: {
+    id: true,
+    avatar: true,
+    firstname: true,
+    lastname: true,
+    handle: true,
+  },
+  createdAt: true,
+};
+
+exports.TWEET = {
+  id: true,
+  text: true,
+  tags: true,
+  createdAt: true,
+};
+
+exports.FILE = {
+  id: true,
+  url: true,
+};
+
+exports.USER = {
+  id: true,
+  avatar: true,
+  firstname: true,
+  lastname: true,
+  handle: true,
+};
 
 exports.COMMENT_FRAGMENT = `
 	fragment COMMENT_FRAGMENT on Comment {

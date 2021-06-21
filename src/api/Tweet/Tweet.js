@@ -23,23 +23,25 @@ module.exports = {
       const userId = ctx.getUserId(ctx);
       if (!userId) throw Error("You need to be authenticated");
 
-      const tl = await ctx.prisma.like.findFirst({
+      const like = await ctx.prisma.like.findFirst({
         where: {
           AND: [{ tweet: { id: parent.id } }, { user: { id: userId } }],
         },
       });
 
-      return tl ? true : false;
+      return like ? true : false;
     },
     isTweetMine: (parent, args, ctx) => {
       const userId = ctx.getUserId(ctx);
       if (!userId) throw Error("You need to be authenticated");
 
-      return ctx.prisma.tweet.findFirst({
+      const mine =  ctx.prisma.tweet.findFirst({
         where: {
           AND: [{ id: parent.id }, { user: { id: userId } }],
         },
       });
+
+      return mine ? true : false;
     },
     isRetweet: async (parent, args, ctx) => {
       const userId = ctx.getUserId(ctx);
