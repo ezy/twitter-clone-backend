@@ -15,7 +15,7 @@ module.exports = {
       if (following.length) throw Error("You are following him already.");
 
       // 3. otherwise, follow him and return true for success
-      await ctx.prisma.updateUser({
+      await ctx.prisma.user.update({
         data: {
           following: {
             connect: { id: args.id },

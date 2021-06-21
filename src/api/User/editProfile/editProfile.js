@@ -5,7 +5,7 @@ module.exports = {
       const userId = ctx.getUserId(ctx);
       if (!userId) throw Error("You need to be authenticated.");
 
-      const user = await ctx.prisma.updateUser({
+      const user = await ctx.prisma.user.update({
         where: { id: userId },
         data: {
           ...args,

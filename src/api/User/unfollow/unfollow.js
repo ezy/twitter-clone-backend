@@ -13,7 +13,7 @@ module.exports = {
       if (!following.length) throw Error("You are not following him.");
 
       // 3. if following, then disconnect the relationship
-      await ctx.prisma.updateUser({
+      await ctx.prisma.user.update({
         where: { id: userId },
         data: {
           following: {
