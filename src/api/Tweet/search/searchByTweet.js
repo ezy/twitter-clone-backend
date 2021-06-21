@@ -4,11 +4,11 @@ module.exports = {
   Query: {
     searchByTweet: async (parent, args, ctx) =>
       ctx.prisma
-        .tweets({
+        .tweet.findMany({
           where: {
-            text_contains: args.term,
+            text: {contains: args.term},
           },
         })
-        .$fragment(TWEET_FRAGMENT),
+        // .$fragment(TWEET_FRAGMENT),
   },
 };

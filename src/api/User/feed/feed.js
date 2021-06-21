@@ -20,6 +20,7 @@ module.exports = {
           createdAt: "desc",
         }
         // select: TWEET_SELECT,
+        // include: etc.
       });
 
       return tweets;

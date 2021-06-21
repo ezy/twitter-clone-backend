@@ -10,7 +10,7 @@ module.exports = {
       if (!tweet) throw Error(`No tweet exists for id - ${args.id}`);
 
       // 3. make sure the tweet is someone else
-      const isTweetMine = await ctx.prisma.tweets({
+      const isTweetMine = await ctx.prisma.tweet.findMany({
         where: {
           AND: [{ id: args.id }, { user: { id: userId } }],
         },

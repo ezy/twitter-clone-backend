@@ -1,11 +1,11 @@
 module.exports = {
   Query: {
     searchByUser: (parent, args, ctx) => {
-      return ctx.prisma.users({
+      return ctx.prisma.user.findMany({
         where: {
           OR: [
-            { handle_contains: args.term },
-            { firstname_contains: args.term },
+            { handle: { contains: args.term } },
+            { firstname: { contains: args.term } },
             { lastname: args.term },
           ],
         },
