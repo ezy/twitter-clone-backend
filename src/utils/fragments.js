@@ -89,6 +89,24 @@ exports.TWEET_FRAGMENT = `
 	}
 `;
 
+exports.TWEET_SELECT = {
+	id: true,
+	text: true,
+	tags: true,
+	files: {
+		id: true,
+		url: true,
+	},
+	user: {
+		id: true,
+		avatar: true,
+		firstname: true,
+		lastname: true,
+		handle: true,
+	},
+	createdAt: true,
+}
+
 exports.COMMENT_FRAGMENT = `
 	fragment COMMENT_FRAGMENT on Comment {
 		id

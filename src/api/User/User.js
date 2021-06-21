@@ -9,9 +9,9 @@ module.exports = {
     },
     isFollowing: async (parent, args, ctx) => {
       const userId = ctx.getUserId(ctx);
-      const following = await ctx.prisma.user({ id: userId }).following({
+      const following = await ctx.prisma.user.findUnique({ where: {id: userId} }).following({
         where: {
-          id_contains: parent.id,
+          id: { contains: parent.id },
         },
       });
       return following.length ? true : false;

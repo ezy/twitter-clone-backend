@@ -1,4 +1,4 @@
-const { TWEET_FRAGMENT } = require("../../../utils/fragments");
+const { TWEET_SELECT } = require("../../../utils/fragments");
 
 module.exports = {
   Query: {
@@ -10,16 +10,17 @@ module.exports = {
       // get the tweets of the user and the people whom they are following
       const following = await ctx.prisma.user.findUnique({ where: { id: userId } }).following();
 
-      const tweets = await ctx.prisma
-        .tweets({
-          where: {
-            user: {
-              id_in: following.map((user) => user.id).concat([userId]),
-            },
+      const tweets = await ctx.prisma.tweet.findMany({
+        where: {
+          id: {
+            in: following.map((user) => user.id).concat([userId])
           },
-          orderBy: "createdAt_DESC",
-        })
-        .$fragment(TWEET_FRAGMENT);
+        },
+        orderBy: {
+          createdAt: "desc",
+        }
+        // select: TWEET_SELECT,
+      });
 
       return tweets;
     },

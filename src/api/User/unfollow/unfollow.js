@@ -6,8 +6,8 @@ module.exports = {
       if (!userId) throw Error("You need to be authenticated");
 
       // 2. first check if the user is following him, if not throw error
-      const following = await ctx.prisma.user({ id: userId }).following({
-        where: { id_contains: args.id },
+      const following = await ctx.prisma.user.findUnique({ where: {id: userId} }).following({
+        where: { id: { contains: args.id } },
       });
 
       if (!following.length) throw Error("You are not following him.");
