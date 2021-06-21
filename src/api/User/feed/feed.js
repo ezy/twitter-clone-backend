@@ -8,7 +8,7 @@ module.exports = {
       if (!userId) throw Error("You need to be authenticated");
 
       // get the tweets of the user and the people whom they are following
-      const following = await ctx.prisma.user({ id: userId }).following();
+      const following = await ctx.prisma.user.findUnique({ where: { id: userId } }).following();
 
       const tweets = await ctx.prisma
         .tweets({

@@ -6,14 +6,14 @@ module.exports = {
       if (!userId) throw Error("You need to be authenticated");
 
       // 2. only list users whom I am not following and limit to 4
-      const following = await ctx.prisma.user({ id: userId }).following();
+      const following = await ctx.prisma.user.findUnique({ where: {id: userId} }).following();
 
       const userIds = following.map((user) => user.id);
-      return ctx.prisma.users({
+      return ctx.prisma.user.findMany({
         where: {
-          id_not_in: userIds.concat([userId]),
+          id: { notIn: following },
         },
-        first: 4,
+        take: 4,
       });
     },
   },

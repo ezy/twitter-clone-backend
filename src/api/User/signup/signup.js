@@ -25,8 +25,6 @@ module.exports = {
         },
       });
 
-      console.log('**********', user);
-
       // generate jsonwebtoken using userid as payload
       const payload = { userId: user.id };
       const token = jwt.sign(payload, process.env.JWT_SECRET);

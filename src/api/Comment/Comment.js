@@ -5,8 +5,8 @@ module.exports = {
       const userId = ctx.getUserId(ctx);
       if (!userId) throw Error("You need to be authenticated");
 
-      return ctx.prisma.$exists.comment({
-        AND: [{ id: parent.id }, { user: { id: userId } }],
+      return ctx.prisma.comment.findFirst({
+        where: { AND: [{ id: parent.id }, { user: { id: userId } }] },
       });
     },
   },

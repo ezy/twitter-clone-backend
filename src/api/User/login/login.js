@@ -5,7 +5,7 @@ module.exports = {
   Mutation: {
     login: async (parent, args, ctx) => {
       // 1. check the user is registered
-      const user = await ctx.prisma.user({ email: args.email });
+      const user = await ctx.prisma.user.findUnique({ where: {email: args.email} });
       if (!user) throw Error("The email is not registered to an account.");
 
       // 2. check if the password matches

@@ -8,7 +8,7 @@ module.exports = {
       if (!userId) throw Error("You need to be authenticated");
 
       // 2.make sure the tweet exist
-      const exists = await ctx.prisma.$exists.tweet({ id: args.id });
+      const exists = await ctx.prisma.tweet.findFirst({ where: {id: args.id} });
       if (!exists) throw Error(`No tweet exists for id - ${args.id}`);
 
       // 3. add a comment
