@@ -8,12 +8,14 @@ module.exports = {
       if (!userId) throw Error("You need to be authenticated");
 
       // 2.make sure the tweet exist
-      const exists = await ctx.prisma.tweet.findFirst({ where: {id: args.id} });
+      const exists = await ctx.prisma.tweet.findFirst({
+        where: { id: args.id },
+      });
       if (!exists) throw Error(`No tweet exists for id - ${args.id}`);
 
       // 3. add a comment
-      const comment = await ctx.prisma
-        .createComment({
+      const comment = await ctx.prisma.comment.create({
+        data: {
           text: args.text,
           tweet: {
             connect: { id: args.id },
@@ -21,8 +23,9 @@ module.exports = {
           user: {
             connect: { id: userId },
           },
-        })
-        .$fragment(COMMENT_FRAGMENT);
+        },
+      });
+      // .$fragment(COMMENT_FRAGMENT);
 
       // 4. return the comment
       return comment;
