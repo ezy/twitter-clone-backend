@@ -13,15 +13,17 @@ module.exports = {
       });
 
       if (like) {
-        await ctx.prisma.like.delete({ where: {id: like.id} });
+        await ctx.prisma.like.delete({ where: { id: like.id } });
         return true;
       }
 
       // if not, create a like
       if (!like) {
         await ctx.prisma.like.create({
-          tweet: { connect: { id: args.id } },
-          user: { connect: { id: userId } },
+          data: {
+            tweet: { connect: { id: args.id } },
+            user: { connect: { id: userId } },
+          },
         });
         return true;
       }
