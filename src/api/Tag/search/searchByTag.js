@@ -9,10 +9,10 @@ module.exports = {
             has: args.term,
           },
         },
-        include: {
-          user: true,
-          files: true,
-        },
+        // include: {
+        //   user: true,
+        //   files: true,
+        // },
       });
     },
   },

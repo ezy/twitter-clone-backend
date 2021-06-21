@@ -11,6 +11,7 @@ module.exports = {
       const tweet = await ctx.prisma.tweet.findFirst({
         where: { id: args.id },
       });
+        // .$fragment(TWEET_FRAGMENT);
       if (!tweet) {
         throw Error(`No tweet for found id - ${args.id}`);
       }
