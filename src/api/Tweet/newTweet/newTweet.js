@@ -15,7 +15,7 @@ module.exports = {
             set: tags,
           },
           user: { connect: { id: userId } },
-        }
+        },
       });
 
       // 3. if there is any file, create it
@@ -26,7 +26,7 @@ module.exports = {
               url: file,
               tweet: { connect: { id: tweet.id } },
               user: { connect: { id: userId } },
-            }
+            },
           });
         });
       }
@@ -34,28 +34,26 @@ module.exports = {
       // 4. for every tag associate it with the tweet
       if (tweet.tags && tweet.tags.length) {
         tweet.tags.forEach(async (tag) => {
-          // if the tag already exits update the tag
-          const [res] = await ctx.prisma.tag.findMany({
-            where: {
-              text: tag,
-            },
-          });
-
-          await ctx.prisma.tag.upsert({
-            where: {
-              id: res.id,
-            },
-            update: {
-              tweet: {
-                connect: { id: tweet.id },
+          const hasTag = await ctx.prisma.tag.findFirst({ where: { text: tag } });
+          if (!hasTag) {
+            await ctx.prisma.tag.create({
+              data: {
+                text: tag,
+                tweets: {
+                  connect: { id: tweet.id },
+                },
               },
-            },
-            create: {
-              tweet: {
-                connect: { id: tweet.id },
+            });
+          } else {
+            await ctx.prisma.tag.update({
+              where: { text: tag },
+              data: {
+                tweets: {
+                  connect: { id: tweet.id },
+                },
               },
-            },
-          });
+            });
+          }
         });
       }
 
