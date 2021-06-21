@@ -16,8 +16,6 @@ module.exports = {
         }
       });
 
-      console.log(userExists);
-
       if (!userExists) throw Error(`No user found for handle - ${args.handle}`);
       return userExists;
       // .$fragment(PROFILE_FRAGMENT);

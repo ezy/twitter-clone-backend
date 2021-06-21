@@ -11,7 +11,7 @@ module.exports = {
       const userIds = following.map((user) => user.id);
       return ctx.prisma.user.findMany({
         where: {
-          id: { notIn: following },
+          id: { notIn: userIds },
         },
         take: 4,
       });
