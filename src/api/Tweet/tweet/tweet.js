@@ -3,7 +3,6 @@
 module.exports = {
   Query: {
     tweet: (parent, args, ctx) => {
-      console.log('**********', args.id);
       return ctx.prisma.tweet.findFirst({
         where: { id: args.id },
         include: {

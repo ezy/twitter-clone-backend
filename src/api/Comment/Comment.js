@@ -1,13 +1,15 @@
 module.exports = {
   Comment: {
-    isCommentMine: (parent, args, ctx) => {
+    isCommentMine: async (parent, args, ctx) => {
       // 1. make sure the user is authenticated
       const userId = ctx.getUserId(ctx);
       if (!userId) throw Error("You need to be authenticated");
 
-      return ctx.prisma.comment.findFirst({
+      const mine = await ctx.prisma.comment.findFirst({
         where: { AND: [{ id: parent.id }, { user: { id: userId } }] },
       });
+
+      return mine ? true : false;
     },
   },
 };
