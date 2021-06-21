@@ -12,7 +12,7 @@ module.exports = {
           followers: true,
           // comments: true,
           // likes: true,
-          // files: true
+          files: true
         }
       });
 
