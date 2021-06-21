@@ -3,15 +3,13 @@ const { TWEET_FRAGMENT } = require("../../../utils/fragments");
 module.exports = {
   Query: {
     searchByTag: async (parent, args, ctx) => {
-      const tweets = await ctx.prisma.tag.findFirst({
-        where: { text: { contains: args.term } },
-        include: {
-          tweets: true,
+      return ctx.prisma.tweet.findMany({
+        where: {
+          tags: {
+            has: args.term,
+          },
         },
       });
-      // .$fragment(TWEET_FRAGMENT);
-
-      return tweets ? tweets[0].tweets : [];
     },
   },
 };

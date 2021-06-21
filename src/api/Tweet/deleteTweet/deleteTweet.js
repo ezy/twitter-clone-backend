@@ -8,19 +8,19 @@ module.exports = {
       if (!userId) throw Error("You need to be authenticated");
 
       // 2. check if the tweet exists
-      const tweet = await ctx.prisma
-        .tweet({ id: args.id })
-        .$fragment(TWEET_FRAGMENT);
+      const tweet = await ctx.prisma.tweet.findFirst({
+        where: { id: args.id },
+      });
       if (!tweet) {
         throw Error(`No tweet for found id - ${args.id}`);
       }
 
       // 3. make sure the tweet belongs to the user
-      if (tweet.user.id !== userId) {
+      if (tweet?.userId !== userId) {
         throw Error("You don't have permission to delete this tweet");
       }
 
-      return ctx.prisma.deleteTweet({ id: args.id });
+      return ctx.prisma.tweet.delete({ where: { id: args.id } });
     },
   },
 };
