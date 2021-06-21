@@ -16,7 +16,7 @@ type User {
   followers: [User!]!
   comments: [Comment!]!
   likes: [Like!]!
-  files: [File!]!
+  files: [File!]
   # computed fields
   fullname: String!
   isSelf: Boolean!
@@ -34,7 +34,7 @@ type Tweet {
   user: User
   text: String!
   tags: [String!]! 
-  files: [File!]!
+  files: [File!]
   comments: [Comment!]!
   likes: [Like!]!
   retweets: [Retweet!]!

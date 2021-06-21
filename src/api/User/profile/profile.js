@@ -8,11 +8,11 @@ module.exports = {
         include: { 
           tweets: true,
           // retweets: true,
-          // following: true,
-          // followers: true,
+          following: true,
+          followers: true,
           // comments: true,
           // likes: true,
-          files: true
+          // files: true
         }
       });
 
