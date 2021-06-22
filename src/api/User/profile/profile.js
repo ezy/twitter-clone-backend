@@ -6,7 +6,11 @@ module.exports = {
       const userExists = await ctx.prisma.user.findUnique({
         where: { handle: args.handle },
         include: { 
-          tweets: true,
+          tweets: {
+            include: {
+              user: true,
+            }
+          },
           retweets: true,
           following: true,
           followers: true,
