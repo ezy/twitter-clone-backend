@@ -35,7 +35,7 @@ module.exports = {
         mentions.forEach(async (handle) => {
           handle = handle.substring(1);
           const user = await ctx.prisma.user.findFirst({ where: { handle } });
-          if (user && user.id) {
+          if (user && user.id && userId !== user.id) {
             await ctx.prisma.mention.create({
             data: {
               user: {
