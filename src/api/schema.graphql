@@ -25,6 +25,7 @@ type User {
   isFollowing: Boolean!
   followingCount: Int!
   followersCount: Int!
+  newMentionsCount: Int!
   tweetsCount: Int!
   # prisma does this
   createdAt: String

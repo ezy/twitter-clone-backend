@@ -37,5 +37,11 @@ module.exports = {
         },
       });
     },
+    newMentionsCount: async (parent, args, ctx) => {
+      // return await ctx.prisma.mentions.count({
+      //   where: { AND: [{ status: 'new' }, { user: { id: parent.id } }] },
+      // });
+      return 5;
+    },
   },
 };
