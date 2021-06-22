@@ -9,7 +9,10 @@ module.exports = {
           tweets: {
             include: {
               user: true,
-            }
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
           },
           retweets: true,
           following: true,
