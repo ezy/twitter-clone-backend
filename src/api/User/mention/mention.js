@@ -16,13 +16,14 @@ module.exports = {
       let mentions = await ctx.prisma.mention.findMany({
         where: { user: { id: userId } },
       });
-      mentions = mentions.map(m => m.tweetId);
+      mentions = mentions.map((m) => m.tweetId);
 
       return await ctx.prisma.tweet.findMany({
         where: { id: { in: mentions } },
         include: {
-          user: true
-        }
+          user: true,
+          files: true,
+        },
       });
     },
   },
