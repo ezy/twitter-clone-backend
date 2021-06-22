@@ -1,13 +1,11 @@
-const { mentionTypes } = require('../../../constants/mentions');
+const { mentionTypes } = require("../../../constants/mentions");
 
 module.exports = {
   Mutation: {
-    mentionClear: async (parent, args, ctx) => {
-      // 1. make sure the user is authenticated
+    getMentions: async (parent, args, ctx) => {
       const userId = ctx.getUserId(ctx);
       if (!userId) throw Error("You need to be authenticated");
 
-      // 2. check if the like already exists, if exists remove it
       await ctx.prisma.mention.updateMany({
         where: {
           AND: [{ user: { id: userId } }, { status: mentionTypes.NEW }],
@@ -15,7 +13,14 @@ module.exports = {
         data: { status: mentionTypes.READ },
       });
 
-      return true;
+      return await ctx.prisma.tweet.findMany({
+        where: {
+          AND: [
+            { user: { id: userId } },
+            { mention: { status: mentionTypes.READ } },
+          ],
+        },
+      });
     },
   },
 };
