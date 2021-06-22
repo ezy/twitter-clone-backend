@@ -1,3 +1,5 @@
+const { NEW } = require('../../constants/mentions');
+
 module.exports = {
   User: {
     fullname: (parent, args, ctx) => {
@@ -39,7 +41,7 @@ module.exports = {
     },
     newMentionsCount: async (parent, args, ctx) => {
       return await ctx.prisma.mention.count({
-        where: { AND: [{user: { id: parent.id }}, { status: 'new'}] } 
+        where: { AND: [{user: { id: parent.id }}, { status: mentionTypes.NEW }] } 
       })
     },
   },
