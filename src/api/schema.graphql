@@ -37,7 +37,7 @@ type Tweet {
   text: String!
   tags: [String!]!
   files: [File!]
-  mentions: [Mention!]
+  mentions: [Mention!]!
   comments: [Comment!]!
   likes: [Like!]!
   retweets: [Retweet!]!
@@ -82,15 +82,6 @@ type Retweet {
   id: ID!
   tweet: Tweet 
   user: User 
-  createdAt: String!
-  updatedAt: String!
-}
-
-type Mention {
-  id: ID!
-  tweet: Tweet
-  user: User
-  status: String
   createdAt: String!
   updatedAt: String!
 }

@@ -14,20 +14,20 @@ model User {
   email      String    @unique
   handle     String    @unique
   password   String?
-  coverPhoto String?   @default("https://res.cloudinary.com/tylerdurden/image/upload/v1617334073/random/Rectangle_2_mbyujf.png")
   avatar     String?   @default("https://res.cloudinary.com/tylerdurden/image/upload/v1602657481/random/pngfind.com-default-image-png-6764065_krremh.png")
+  coverPhoto String?   @default("https://res.cloudinary.com/tylerdurden/image/upload/v1617334073/random/Rectangle_2_mbyujf.png")
   bio        String?   @default("")
+  dob        String?   @default("")
   location   String?   @default("")
   website    String?   @default("")
-  dob        String?   @default("")
-  tweets     Tweet[]   @relation(name: "TweetsByUser")
-  retweets   Retweet[] @relation(name: "RetweetsByUser")
-  following  User[]    @relation(name: "FollowRelation")
-  followers  User[]    @relation(name: "FollowRelation")
   comments   Comment[] @relation(name: "CommentsByUser")
-  likes      Like[]    @relation(name: "LikesByUser")
   files      File[]    @relation(name: "FilesByUser")
-  mention    Mention[] @relation(name: "MentionsForUser")
+  followers  User[]    @relation(name: "FollowRelation")
+  following  User[]    @relation(name: "FollowRelation")
+  likes      Like[]    @relation(name: "LikesByUser")
+  mentions   Mention[] @relation(name: "MentionsForUser")
+  retweets   Retweet[] @relation(name: "RetweetsByUser")
+  tweets     Tweet[]   @relation(name: "TweetsByUser")
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
@@ -37,14 +37,14 @@ model Tweet {
   user      User?     @relation(name: "TweetsByUser", fields: [userId], references: [id])
   text      String
   tags      String[]
-  mentions  Mention[] @relation(name: "MentionsForTweets")
-  files     File[]    @relation(name: "FilesForTweets")
   comments  Comment[] @relation(name: "CommentsForTweets")
+  files     File[]    @relation(name: "FilesForTweets")
   likes     Like[]    @relation(name: "LikesForTweets")
+  mentions  Mention[] @relation(name: "MentionsForTweets")
   retweets  Retweet[] @relation(name: "RetweetsOfTweet")
+  Tag       Tag?      @relation(fields: [tagId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Tag       Tag?      @relation(fields: [tagId], references: [id])
   tagId     String?
   userId    String?
 }

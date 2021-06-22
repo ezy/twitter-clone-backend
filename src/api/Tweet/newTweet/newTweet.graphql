@@ -3,5 +3,6 @@ type Mutation {
     text: String! 
     files: [String!]
     tags: [String!]
+    mentions: [String!]
   ): Tweet!
 }
