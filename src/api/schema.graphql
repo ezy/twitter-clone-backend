@@ -37,7 +37,7 @@ type Tweet {
   text: String!
   tags: [String!]!
   files: [File!]
-  mentions: [Mention!]!
+  mentions: [String!]!
   comments: [Comment!]!
   likes: [Like!]!
   retweets: [Retweet!]!
