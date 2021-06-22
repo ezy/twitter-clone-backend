@@ -6,13 +6,16 @@ module.exports = {
       if (!userId) throw Error("You need to be authenticated");
 
       // 2. create a new tweet
-      const { text, files, tags = [] } = args;
+      const { text, files, tags = [], mentions = [] } = args;
 
       const tweet = await ctx.prisma.tweet.create({
         data: {
           text,
           tags: {
             set: tags,
+          },
+          mentions: {
+            set: mentions,
           },
           user: { connect: { id: userId } },
         },

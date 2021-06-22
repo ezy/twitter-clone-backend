@@ -36,6 +36,7 @@ model Tweet {
   user      User?     @relation(name: "TweetsByUser", fields: [userId], references: [id])
   text      String
   tags      String[]
+  mentions  Mention[] @relation(name: "MentionsForTweets")
   files     File[]    @relation(name: "FilesForTweets")
   comments  Comment[] @relation(name: "CommentsForTweets")
   likes     Like[]    @relation(name: "LikesForTweets")
@@ -85,6 +86,15 @@ model Tag {
   tweets    Tweet[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Mention {
+  id        String   @id @default(cuid())
+  tweet     Tweet?   @relation(name: "MentionsForTweets", fields: [tweetId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tweetId   String?
+  userId    String?
 }
 
 model Retweet {
