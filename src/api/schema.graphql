@@ -12,7 +12,7 @@ type User {
   dob: String
   tweets: [Tweet!]!
 
-  
+
   retweets: [Retweet!]!
   following: [User!]!
   followers: [User!]!
@@ -88,8 +88,9 @@ type Retweet {
 
 type Mention {
   id: ID!
-  tweet: Tweet 
-  user: User 
+  tweet: Tweet
+  user: User
+  status: String
   createdAt: String!
   updatedAt: String!
 }

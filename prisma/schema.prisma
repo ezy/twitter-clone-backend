@@ -27,6 +27,7 @@ model User {
   comments   Comment[] @relation(name: "CommentsByUser")
   likes      Like[]    @relation(name: "LikesByUser")
   files      File[]    @relation(name: "FilesByUser")
+  mention    Mention[] @relation(name: "MentionsForUser")
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
@@ -91,6 +92,8 @@ model Tag {
 model Mention {
   id        String   @id @default(cuid())
   tweet     Tweet?   @relation(name: "MentionsForTweets", fields: [tweetId], references: [id])
+  user      User?    @relation(name: "MentionsForUser", fields: [userId], references: [id])
+  status    String   @default("new")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   tweetId   String?

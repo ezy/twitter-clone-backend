@@ -34,10 +34,28 @@ module.exports = {
         });
       }
 
+      if (tweet.mentions && tweet.mentions.length) {
+        tweet.mentions.forEach(async (handle) => {
+          const user = await ctx.prisma.user.findFirst({ where: { handle } });
+          await ctx.prisma.mention.create({
+            data: {
+              user: {
+                connect: { id: user.id },
+              },
+              tweet: {
+                connect: { id: tweet.id },
+              },
+            },
+          });
+        });
+      }
+
       // 4. for every tag associate it with the tweet
       if (tweet.tags && tweet.tags.length) {
         tweet.tags.forEach(async (tag) => {
-          const hasTag = await ctx.prisma.tag.findFirst({ where: { text: tag } });
+          const hasTag = await ctx.prisma.tag.findFirst({
+            where: { text: tag },
+          });
           if (!hasTag) {
             await ctx.prisma.tag.create({
               data: {
