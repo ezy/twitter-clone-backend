@@ -43,8 +43,10 @@ model Tweet {
   mentions  Mention[] @relation(name: "MentionsForTweets")
   retweets  Retweet[] @relation(name: "RetweetsOfTweet")
   Tag       Tag?      @relation(fields: [tagId], references: [id])
+  Mention   Mention?  @relation(fields: [mentionId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  mentionId String?
   tagId     String?
   userId    String?
 }
@@ -98,6 +100,7 @@ model Mention {
   updatedAt DateTime @updatedAt
   tweetId   String?
   userId    String?
+  Tweet     Tweet[]
 }
 
 model Retweet {

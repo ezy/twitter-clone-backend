@@ -1,4 +1,4 @@
-const { NEW } = require('../../constants/mentions');
+const mentionTypes = require('../../constants/mentions');
 
 module.exports = {
   User: {
