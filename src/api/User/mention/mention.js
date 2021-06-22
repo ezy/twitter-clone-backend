@@ -24,6 +24,9 @@ module.exports = {
           user: true,
           files: true,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
       });
     },
   },
